@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Library" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+  <EntityContainer Name="LibraryContainer" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Events" EntityType="Library.Event" />
+    <EntitySet Name="Places" EntityType="Library.Place" />
+    <EntitySet Name="Performers" EntityType="Library.Performer" />
+    <AssociationSet Name="EventPlace" Association="Library.EventPlace">
+      <End Role="Event" EntitySet="Events" />
+      <End Role="Place" EntitySet="Places" />
+    </AssociationSet>
+    <AssociationSet Name="EventPerformer" Association="Library.EventPerformer">
+      <End Role="Event" EntitySet="Events" />
+      <End Role="Performer" EntitySet="Performers" />
+    </AssociationSet>
+    <EntitySet Name="Locations" EntityType="Library.Location" />
+    <AssociationSet Name="PlaceLocation" Association="Library.PlaceLocation">
+      <End Role="Place" EntitySet="Places" />
+      <End Role="Location" EntitySet="Locations" />
+    </AssociationSet>
+    <AssociationSet Name="LocationPerformer" Association="Library.LocationPerformer">
+      <End Role="Location" EntitySet="Locations" />
+      <End Role="Performer" EntitySet="Performers" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Event">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="description" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="timeDate" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="Places" Relationship="Library.EventPlace" FromRole="Event" ToRole="Place" />
+    <NavigationProperty Name="Performers" Relationship="Library.EventPerformer" FromRole="Event" ToRole="Performer" />
+    <Property Name="price" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="openingHours" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="performer" Type="String" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Place">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="address" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="information" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="Events" Relationship="Library.EventPlace" FromRole="Place" ToRole="Event" />
+    <NavigationProperty Name="Location" Relationship="Library.PlaceLocation" FromRole="Place" ToRole="Location" />
+  </EntityType>
+  <EntityType Name="Performer">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="performer" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="information" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="Events" Relationship="Library.EventPerformer" FromRole="Performer" ToRole="Event" />
+    <Property Name="genre" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="Locations" Relationship="Library.LocationPerformer" FromRole="Performer" ToRole="Location" />
+  </EntityType>
+  <Association Name="EventPlace">
+    <End Type="Library.Event" Role="Event" Multiplicity="*" />
+    <End Type="Library.Place" Role="Place" Multiplicity="*" />
+  </Association>
+  <Association Name="EventPerformer">
+    <End Type="Library.Event" Role="Event" Multiplicity="*" />
+    <End Type="Library.Performer" Role="Performer" Multiplicity="*" />
+  </Association>
+  <EntityType Name="Location">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="area" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="Places" Relationship="Library.PlaceLocation" FromRole="Location" ToRole="Place" />
+    <NavigationProperty Name="Performers" Relationship="Library.LocationPerformer" FromRole="Location" ToRole="Performer" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+  </EntityType>
+  <Association Name="PlaceLocation">
+    <End Type="Library.Place" Role="Place" Multiplicity="*" />
+    <End Type="Library.Location" Role="Location" Multiplicity="1" />
+  </Association>
+  <Association Name="LocationPerformer">
+    <End Type="Library.Location" Role="Location" Multiplicity="*" />
+    <End Type="Library.Performer" Role="Performer" Multiplicity="*" />
+  </Association>
+</Schema>

@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Evetns.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="EvetnsStoreContainer">
+    <EntitySet Name="Events" EntityType="Evetns.Store.Events" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Performers" EntityType="Evetns.Store.Performers" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Places" EntityType="Evetns.Store.Places" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="EventPerformer" EntityType="Evetns.Store.EventPerformer" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PlaceEvent" EntityType="Evetns.Store.PlaceEvent" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_EventPerformer_Event" Association="Evetns.Store.FK_EventPerformer_Event">
+      <End Role="Event" EntitySet="Events" />
+      <End Role="EventPerformer" EntitySet="EventPerformer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EventPerformer_Performer" Association="Evetns.Store.FK_EventPerformer_Performer">
+      <End Role="Performer" EntitySet="Performers" />
+      <End Role="EventPerformer" EntitySet="EventPerformer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PlaceEvent_Place" Association="Evetns.Store.FK_PlaceEvent_Place">
+      <End Role="Place" EntitySet="Places" />
+      <End Role="PlaceEvent" EntitySet="PlaceEvent" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PlaceEvent_Event" Association="Evetns.Store.FK_PlaceEvent_Event">
+      <End Role="Event" EntitySet="Events" />
+      <End Role="PlaceEvent" EntitySet="PlaceEvent" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Events">
+    <Key>
+      <PropertyRef Name="EventID" />
+    </Key>
+    <Property Name="EventID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="TimeDate" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Price" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="OpeningHours" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="PerformerID" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="PlaceID" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Performers">
+    <Key>
+      <PropertyRef Name="PerformerID" />
+    </Key>
+    <Property Name="PerformerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Genre" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Places">
+    <Key>
+      <PropertyRef Name="PlaceID" />
+    </Key>
+    <Property Name="PlaceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Location" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EventPerformer">
+    <Key>
+      <PropertyRef Name="Events_EventID" />
+      <PropertyRef Name="Performers_PerformerID" />
+    </Key>
+    <Property Name="Events_EventID" Type="int" Nullable="false" />
+    <Property Name="Performers_PerformerID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PlaceEvent">
+    <Key>
+      <PropertyRef Name="Places_PlaceID" />
+      <PropertyRef Name="Events_EventID" />
+    </Key>
+    <Property Name="Places_PlaceID" Type="int" Nullable="false" />
+    <Property Name="Events_EventID" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_EventPerformer_Event">
+    <End Role="Event" Type="Evetns.Store.Events" Multiplicity="1" />
+    <End Role="EventPerformer" Type="Evetns.Store.EventPerformer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Event">
+        <PropertyRef Name="EventID" />
+      </Principal>
+      <Dependent Role="EventPerformer">
+        <PropertyRef Name="Events_EventID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EventPerformer_Performer">
+    <End Role="EventPerformer" Type="Evetns.Store.EventPerformer" Multiplicity="*" />
+    <End Role="Performer" Type="Evetns.Store.Performers" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Performer">
+        <PropertyRef Name="PerformerID" />
+      </Principal>
+      <Dependent Role="EventPerformer">
+        <PropertyRef Name="Performers_PerformerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PlaceEvent_Place">
+    <End Role="Place" Type="Evetns.Store.Places" Multiplicity="1" />
+    <End Role="PlaceEvent" Type="Evetns.Store.PlaceEvent" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Place">
+        <PropertyRef Name="PlaceID" />
+      </Principal>
+      <Dependent Role="PlaceEvent">
+        <PropertyRef Name="Places_PlaceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PlaceEvent_Event">
+    <End Role="PlaceEvent" Type="Evetns.Store.PlaceEvent" Multiplicity="*" />
+    <End Role="Event" Type="Evetns.Store.Events" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Event">
+        <PropertyRef Name="EventID" />
+      </Principal>
+      <Dependent Role="PlaceEvent">
+        <PropertyRef Name="Events_EventID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

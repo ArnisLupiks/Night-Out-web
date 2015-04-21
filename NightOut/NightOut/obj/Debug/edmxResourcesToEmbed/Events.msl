@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="EvetnsStoreContainer" CdmEntityContainer="EvetnsContainer">
+    <EntitySetMapping Name="Events">
+      <EntityTypeMapping TypeName="IsTypeOf(Evetns.Event)">
+        <MappingFragment StoreEntitySet="Events">
+          <ScalarProperty Name="EventID" ColumnName="EventID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="TimeDate" ColumnName="TimeDate" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="OpeningHours" ColumnName="OpeningHours" />
+          <ScalarProperty Name="PerformerID" ColumnName="PerformerID" />
+          <ScalarProperty Name="PlaceID" ColumnName="PlaceID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Performers">
+      <EntityTypeMapping TypeName="IsTypeOf(Evetns.Performer)">
+        <MappingFragment StoreEntitySet="Performers">
+          <ScalarProperty Name="PerformerID" ColumnName="PerformerID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Genre" ColumnName="Genre" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Places">
+      <EntityTypeMapping TypeName="IsTypeOf(Evetns.Place)">
+        <MappingFragment StoreEntitySet="Places">
+          <ScalarProperty Name="PlaceID" ColumnName="PlaceID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Location" ColumnName="Location" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="EventPerformer" TypeName="Evetns.EventPerformer" StoreEntitySet="EventPerformer">
+      <EndProperty Name="Event">
+        <ScalarProperty Name="EventID" ColumnName="Events_EventID" />
+      </EndProperty>
+      <EndProperty Name="Performer">
+        <ScalarProperty Name="PerformerID" ColumnName="Performers_PerformerID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="PlaceEvent" TypeName="Evetns.PlaceEvent" StoreEntitySet="PlaceEvent">
+      <EndProperty Name="Place">
+        <ScalarProperty Name="PlaceID" ColumnName="Places_PlaceID" />
+      </EndProperty>
+      <EndProperty Name="Event">
+        <ScalarProperty Name="EventID" ColumnName="Events_EventID" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>

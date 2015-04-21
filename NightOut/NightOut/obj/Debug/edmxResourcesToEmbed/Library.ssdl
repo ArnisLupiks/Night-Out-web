@@ -1,0 +1,186 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Library.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="EventPerformer">
+    <Key>
+      <PropertyRef Name="Events_Id" />
+      <PropertyRef Name="Performers_Id" />
+    </Key>
+    <Property Name="Events_Id" Type="int" Nullable="false" />
+    <Property Name="Performers_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EventPlace">
+    <Key>
+      <PropertyRef Name="Events_Id" />
+      <PropertyRef Name="Places_Id" />
+    </Key>
+    <Property Name="Events_Id" Type="int" Nullable="false" />
+    <Property Name="Places_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Events">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="description" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="timeDate" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="price" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="openingHours" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="LocationPerformer">
+    <Key>
+      <PropertyRef Name="Locations_Id" />
+      <PropertyRef Name="Performers_Id" />
+    </Key>
+    <Property Name="Locations_Id" Type="int" Nullable="false" />
+    <Property Name="Performers_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Locations">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="area" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Performers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="information" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="genre" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Places">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="address" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="information" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Location_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_EventPerformer_Event">
+    <End Role="Events" Type="Self.Events" Multiplicity="1" />
+    <End Role="EventPerformer" Type="Self.EventPerformer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Events">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="EventPerformer">
+        <PropertyRef Name="Events_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EventPerformer_Performer">
+    <End Role="Performers" Type="Self.Performers" Multiplicity="1" />
+    <End Role="EventPerformer" Type="Self.EventPerformer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Performers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="EventPerformer">
+        <PropertyRef Name="Performers_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EventPlace_Event">
+    <End Role="Events" Type="Self.Events" Multiplicity="1" />
+    <End Role="EventPlace" Type="Self.EventPlace" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Events">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="EventPlace">
+        <PropertyRef Name="Events_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EventPlace_Place">
+    <End Role="Places" Type="Self.Places" Multiplicity="1" />
+    <End Role="EventPlace" Type="Self.EventPlace" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Places">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="EventPlace">
+        <PropertyRef Name="Places_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LocationPerformer_Location">
+    <End Role="Locations" Type="Self.Locations" Multiplicity="1" />
+    <End Role="LocationPerformer" Type="Self.LocationPerformer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Locations">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="LocationPerformer">
+        <PropertyRef Name="Locations_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LocationPerformer_Performer">
+    <End Role="Performers" Type="Self.Performers" Multiplicity="1" />
+    <End Role="LocationPerformer" Type="Self.LocationPerformer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Performers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="LocationPerformer">
+        <PropertyRef Name="Performers_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PlaceLocation">
+    <End Role="Locations" Type="Self.Locations" Multiplicity="1" />
+    <End Role="Places" Type="Self.Places" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Locations">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Places">
+        <PropertyRef Name="Location_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="LibraryStoreContainer">
+    <EntitySet Name="EventPerformer" EntityType="Self.EventPerformer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EventPlace" EntityType="Self.EventPlace" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Events" EntityType="Self.Events" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LocationPerformer" EntityType="Self.LocationPerformer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Locations" EntityType="Self.Locations" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Performers" EntityType="Self.Performers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Places" EntityType="Self.Places" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_EventPerformer_Event" Association="Self.FK_EventPerformer_Event">
+      <End Role="Events" EntitySet="Events" />
+      <End Role="EventPerformer" EntitySet="EventPerformer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EventPerformer_Performer" Association="Self.FK_EventPerformer_Performer">
+      <End Role="Performers" EntitySet="Performers" />
+      <End Role="EventPerformer" EntitySet="EventPerformer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EventPlace_Event" Association="Self.FK_EventPlace_Event">
+      <End Role="Events" EntitySet="Events" />
+      <End Role="EventPlace" EntitySet="EventPlace" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EventPlace_Place" Association="Self.FK_EventPlace_Place">
+      <End Role="Places" EntitySet="Places" />
+      <End Role="EventPlace" EntitySet="EventPlace" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LocationPerformer_Location" Association="Self.FK_LocationPerformer_Location">
+      <End Role="Locations" EntitySet="Locations" />
+      <End Role="LocationPerformer" EntitySet="LocationPerformer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LocationPerformer_Performer" Association="Self.FK_LocationPerformer_Performer">
+      <End Role="Performers" EntitySet="Performers" />
+      <End Role="LocationPerformer" EntitySet="LocationPerformer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PlaceLocation" Association="Self.FK_PlaceLocation">
+      <End Role="Locations" EntitySet="Locations" />
+      <End Role="Places" EntitySet="Places" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
